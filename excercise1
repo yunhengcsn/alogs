@@ -1,0 +1,42 @@
+/*
+ * @function 找到更多的这样的整数：一些相续正整数的立方和正好等于另一个整数的立方。
+ */
+package excercise1;
+import java.util.Scanner;
+/**
+ * @author Yunhengcsn
+ */
+public class Excercise1 {
+    public static void main(String[] args) {
+        //输入上限
+        Scanner scanner=new Scanner(System.in);
+        System.out.println("输入一个整数：");
+        int imax=scanner.nextInt();
+        //定义所需变量，i为最小整数，j为最大整数，sum为用于判断大小的和
+        int i,j,temp;
+        long sum=0;
+        
+        while(imax>1){
+            for(j=imax-1;j>0;j--){
+                 for(i=j;i>0;i--){
+                    sum=sum+(int)Math.pow(i, 3);
+                    if(sum==(int)Math.pow(imax, 3)){
+                        temp=i+1;
+                        System.out.println(i+"^3+"+temp+"^3+...+"+j+"^3="+imax+"^3");
+                        sum=0;
+                        temp=0;
+                    }
+                    if(sum>(int)Math.pow(imax, 3)){
+                        sum=0;
+                        break;   
+                    }
+                 }
+            sum=0;
+            }
+        imax--;
+        sum=0;
+        }
+    }
+
+}
+
