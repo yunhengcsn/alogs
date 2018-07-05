@@ -1,0 +1,42 @@
+/*
+ * 用“埃氏筛法”求2～100以内的素数
+ */
+package exercise2;
+/**
+ * @author Yunhengcsn
+ */
+public class Exercise2 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        int []numbers=new int[99];
+        int []priNum=new int[50];
+        int i,cnt,j=0;
+        //生成未去倍数的数组numbers
+        for(i=0;i<99;i++)
+            numbers[i]=i+2;
+        loop1:for(cnt=0;cnt<99;cnt++){
+            if(numbers[cnt]==2)
+                     priNum[j++]=numbers[cnt];
+            for(i=3;i<numbers[cnt];i=i+2){
+                if(numbers[cnt]%i==0)
+                    continue loop1;
+            }
+            if(cnt%2!=0)
+            priNum[j++]=numbers[cnt];
+        }
+        /*for(int pri:priNum){
+            if(pri!=0)
+             System.out.print(pri+" ");
+        */
+        i=0;
+        while(priNum[i]!=0){
+            if(i!=0&&i%5==0)
+                System.out.println(priNum[i]);
+            else System.out.print(priNum[i]+" ");
+            i++;
+                }
+    }
+}
