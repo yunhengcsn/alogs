@@ -18,13 +18,13 @@ public class Exercise2 {
 
 		for( int i=2; i<=N; i++ ){
 			for( int j=2*i; j<=N; j += i ){
-				a[j] = false;
+				a[j] = false;	//去掉2，3，...，100的倍数
 			}
 		}
 
 		for( int i=2; i<=N; i++ ){
 			if( a[i] ) 
-            System.out.println( i );
+            		System.out.println( i );//输出
 		}
     }
 }
