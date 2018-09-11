@@ -1,0 +1,43 @@
+package excercise3;
+import java.util.Scanner;
+
+/**
+ *二分查找
+ * @author Cuishaona
+ */
+public class Excercise3 {
+    static final int  N=5;
+    public static void main(String[] args) {
+        // TODO code application logic here
+        int index;int x;
+        
+        Scanner scan=new Scanner(System.in);
+        int[] list=new int[N];
+        System.out.printf("Please input %d numbers in order\n",N);
+        for (int i=0;i<list.length;i++){
+        list[i]=scan.nextInt();
+        }
+        System.out.println("Please input a number to search");
+        x=scan.nextInt();
+        int leftt=0,rightt=list.length-1;
+        index=find(list,x,leftt,rightt)+1;
+        System.out.println(index);
+    }
+    
+    static int find(int[] list,int x,int left,int right){
+        int center=(left+right)/2;
+        int ret=-2;
+        if ((left>right)||(list[left]>x)||list[right]<x) return ret;
+        
+            if (list[center]==x)
+                return center;          
+            else if(list[center]>x){
+                right=center-1;
+                return find(list,x,left,right);
+                }
+            else {
+                left=center-1;
+                return find(list,x,left,right);
+                 }        
+    }
+}
