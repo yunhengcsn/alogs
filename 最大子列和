@@ -1,0 +1,29 @@
+
+package excercise3;
+import java.util.Scanner;
+
+/**
+ *最大子列和
+ * @author Cuishaona
+ **PTA上10w个数内存还是会超出
+ */
+public class Excercise3 {
+    public static void main(String[] args){
+        //输入
+        System.out.println("Please input a number and a sequence:");
+        long max=0l;
+        Scanner scanner=new Scanner(System.in);
+        int k=scanner.nextInt();      
+        int b=scanner.nextInt();        
+        int a;        
+        for(int i=1;i<k;i++){
+         a=scanner.nextInt();
+            if(b>=0) 
+                  b+=a;
+              else b=a;
+              if(b>max) max=b;             
+        }        
+        System.out.printf("%d\n",max);
+         scanner.close(); 
+    }     
+}
