@@ -1,0 +1,91 @@
+//runtime 63ms
+class Solution {
+    public int myAtoi(String str) {
+        int index = 0, sign = 1, total = 0;
+        //1. Empty string
+        if(str.length() == 0) return 0;
+        if (str.replace(" ", "").length() == 0) return 0;
+
+        //2. Remove Spaces
+        while(str.charAt(index) == ' ' && index < str.length())
+            index ++;
+
+        //3. Handle signs
+        if(str.charAt(index) == '+' || str.charAt(index) == '-'){
+            sign = str.charAt(index) == '+' ? 1 : -1;
+            index ++;
+        }
+
+        //4. Convert number and avoid overflow
+        while(index < str.length()){
+            int digit = str.charAt(index) - '0';
+            if(digit < 0 || digit > 9) break;
+
+            //check if total will be overflow after 10 times and add digit
+            if(Integer.MAX_VALUE/10 < total || Integer.MAX_VALUE/10 == total && Integer.MAX_VALUE %10 < digit)
+                return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+
+            total = 10 * total + digit;
+            index ++;
+        }
+        return total * sign;
+    }
+}
+
+
+//csn:runtime18ms
+class Solution {
+    public int myAtoi(String str) {
+        if(str.length()==0) return 0;
+        int start=0;
+        int fg=0;
+        while((start<str.length())&&(str.charAt(start)==' ')) start++;
+        while((start<str.length())&&(str.charAt(start)=='0')) {
+            fg=1;
+            start++;
+        }
+        if(start==str.length()) return 0;
+        char st=str.charAt(start);
+        int end=start+1;
+        if((fg==1)&&((st=='+')||(st=='-'))) return 0;
+        
+        if(end==str.length()) {
+            if ((st>='0')&&(st<='9'))
+            return Integer.parseInt(str.substring(start,end));
+            else return 0;
+        }
+        
+        else{
+            int m=1;
+            char ed=str.charAt(end);
+            if(((st=='+')&&((ed>='0')&&(ed<='9')))
+               ||((st=='-')&&((ed>='0')&&(ed<='9')))
+               ||((st>='0')&&(st<='9'))){
+                
+                while((end<str.length())&&(str.charAt(end)>='0')&&(str.charAt(end)<='9')) end++;
+                if(((st=='+')||(st=='-'))&&(str.charAt(start+m)=='0')){
+                    while(str.charAt(start+m)=='0') m++;
+                    if(((start+m==str.length()))||(start+m==end)) return 0;
+                    if(end-start-m>10) return (st=='+')?2147483647:-2147483648;
+                    else {
+                        long result=Long.parseLong(str.substring(start+m,end));
+                        if((st=='-')&&(result-1>2147483647)) return -2147483648;
+                           else if((st=='+')&&(result>2147483647)) return 2147483647;
+                               else return Integer.parseInt(str.substring(start,end));
+                    }
+                }
+                if(str.substring(start,end).length()>11) {
+                    return ((str.charAt(start)=='+')||((str.charAt(start)>='0')&&(str.charAt(start)<='9')))?2147483647:-2147483648;
+                    
+                }
+                else{
+                    long result=Long.parseLong(str.substring(start,end));
+                    if(result<-2147483648) return -2147483648;
+                       else if(result>2147483647) return 2147483647;
+                           else return Integer.parseInt(str.substring(start,end));
+                }
+            }
+            else return 0;
+        }
+    }
+}
