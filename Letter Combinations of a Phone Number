@@ -1,0 +1,47 @@
+class Solution{
+    public List<String> letterCombinations(String digits) {
+      LinkedList<String> ans = new LinkedList<String>();
+      if(digits.isEmpty()) return ans;
+      String[] mapping = new String[] {"0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+      ans.add("");
+      while(ans.peek().length()!=digits.length()){
+        String remove = ans.remove();
+        String map = mapping[digits.charAt(remove.length())-'0'];
+        for(char c: map.toCharArray()){
+          ans.addLast(remove+c);
+        }
+      }
+      return ans;
+    }
+  }
+
+//csn
+class Solution{
+    public static List<String> letterCombinations(String digits) {
+        
+        String[][] str={{"a","b","c"},{"d","e","f"},{"g","h","i"},{"j","k","l"},{"m","n","o"},{"p","q","r","s"},{"t","u","v"},{"w","x","y","z"}};
+        
+        LinkedList<String> list=new LinkedList<>();
+        LinkedList<String> tmplist=new LinkedList<>();
+        if(digits.length()==0) return list;
+        for(int j=0;j<str[Character.getNumericValue(digits.charAt(0))-2].length;j++){
+                    list.add(str[Character.getNumericValue(digits.charAt(0))-2][j]);
+                }
+        
+        for(int i=1;i<digits.length();i++){
+            int len=list.size();
+            int cnt=0;
+            while((list.size()==0)||(cnt<len)){
+               // System.out.println(Character.getNumericValue(digits.charAt(i)));
+                for(int j=0;j<str[Character.getNumericValue(digits.charAt(i))-2].length;j++){
+                    tmplist.add(list.get(cnt)+str[Character.getNumericValue(digits.charAt(i))-2][j]);
+                }
+                cnt++;
+            }
+            list.clear();
+            list.addAll(tmplist);
+            tmplist.clear();
+        }
+        return list;
+    }
+}
