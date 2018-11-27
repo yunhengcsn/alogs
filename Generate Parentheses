@@ -1,0 +1,42 @@
+//不能掌握函数递归调用
+//backtracking  have been understood
+class Solution {
+ public List<String> generateParenthesis(int n) {
+        List<String> list = new ArrayList<String>();
+        backtrack(list, new StringBuilder(), 0, 0, n);
+        return list;
+    }
+    
+    public void backtrack(List<String> list, StringBuilder str, int open, int close, int max){
+        
+        if(str.length() == max*2){
+            list.add(str.toString());
+            return;
+        }
+        
+        if(open < max){
+            backtrack(list, str.append("("), open+1, close, max);
+            str.deleteCharAt(str.length()-1);
+        }
+        if(close < open){
+            backtrack(list, str.append(")"), open, close+1, max);
+            str.deleteCharAt(str.length()-1);
+        }
+    }
+}
+
+
+// Closure Number   don't understand
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> ans = new ArrayList();
+        if (n == 0) {
+            ans.add("");
+        } else {
+            for (int c = 0; c < n; ++c)
+                for (String left: generateParenthesis(c))
+                    for (String right: generateParenthesis(n-1-c))
+                        ans.add("(" + left + ")" + right);
+        }
+        return ans;
+    }
