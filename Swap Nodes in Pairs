@@ -1,0 +1,42 @@
+//csn 3ms
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+        ListNode hh=new ListNode(0);
+        hh.next=head;
+        while((hh.next!=null)&&(hh.next.next!=null)){            
+            ListNode tmp=hh.next.next.next;
+            ListNode a=hh.next;
+            ListNode b=hh.next.next;
+            if(hh.next==head){
+                head=b;
+            }
+            else{
+                hh.next=b;
+            }
+            b.next=a;
+            a.next=tmp;
+            hh=a;
+        }   
+        return head;
+    }
+}
+
+//recursion 3ms
+public class Solution {
+    public ListNode swapPairs(ListNode head) {
+        if ((head == null)||(head.next == null))
+            return head;
+        ListNode n = head.next;
+        head.next = swapPairs(head.next.next);
+        n.next = head;
+        return n;
+    }
+}
