@@ -1,0 +1,16 @@
+//csn 8ms
+class Solution {
+    public void nextPermutation(int[] nums) {
+        int j=nums.length-1;
+        while((j>0)&&(nums[j]<=nums[j-1])) j--;
+        if(j==0) Arrays.sort(nums);
+        else{
+            int i=nums.length-1;
+            while((i>j-1)&&(nums[i]<=nums[j-1])) i--;
+            int tmp=nums[j-1];
+            nums[j-1]=nums[i];
+            nums[i]=tmp;
+            Arrays.sort(nums,j,nums.length);
+        }
+    }
+}
