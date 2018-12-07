@@ -1,0 +1,65 @@
+//5ms
+class Solution {
+    // returns leftmost (or rightmost) index at which `target` should be
+    // inserted in sorted array `nums` via binary search.
+    private int extremeInsertionIndex(int[] nums, int target, boolean left) {
+        int lo = 0;
+        int hi = nums.length;
+        while (lo < hi) {
+            int mid = (lo + hi) / 2;
+            if (nums[mid] > target || (left && target == nums[mid])) {
+                hi = mid;
+            }
+            else {
+                lo = mid+1;
+            }
+        }
+        return lo;
+    }
+
+    public int[] searchRange(int[] nums, int target) {
+        int[] targetRange = {-1, -1};
+
+        int leftIdx = extremeInsertionIndex(nums, target, true);
+
+        // assert that `leftIdx` is within the array bounds and that `target`
+        // is actually in `nums`.
+        if (leftIdx == nums.length || nums[leftIdx] != target) {
+            return targetRange;
+        }
+
+        targetRange[0] = leftIdx;
+        targetRange[1] = extremeInsertionIndex(nums, target, false)-1;
+
+        return targetRange;
+    }
+}
+
+//4ms
+public class Solution{
+    public int[] searchRange(int[] A, int target) {
+	    int i = 0, j = A.length - 1;
+        int[] ret={-1,-1};
+        if(A.length==0) return ret;
+        // Search for the left one
+        while (i < j)
+        {
+            int mid = (i + j) /2;
+            if (A[mid] < target) i = mid + 1;
+            else j = mid;
+        }
+        if (A[i]!=target) return ret;
+        else ret[0] = i;
+
+        // Search for the right one
+        j = A.length-1;  // We don't have to set i to 0 the second time.
+        while (i < j)
+        {
+            int mid = (i + j) /2 + 1;	// Make mid biased to the right
+            if (A[mid] > target) j = mid - 1;  
+            else i = mid;				// So that this won't make the search range stuck.
+        }
+        ret[1] = j;
+        return ret; 
+    }
+}
