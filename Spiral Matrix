@@ -1,0 +1,49 @@
+//csn 2ms
+
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> list =new ArrayList<>();
+        if(matrix.length==0) return list;
+        
+        int i=0;
+        int j=0;
+        for(int loop=0;loop<Math.min(matrix.length+1,matrix[0].length+1)/2;loop++){
+            i=loop;
+            for(j=loop;j<matrix[0].length-loop;j++) list.add(matrix[i][j]);
+            j--;
+            for(i=loop+1;i<matrix.length-loop;i++) list.add(matrix[i][j]);
+            i--;
+            if(i==loop) break;
+            for(j=matrix[0].length-loop-2;j>=loop;j--) list.add(matrix[i][j]);
+            j++;
+            if(j==matrix[0].length-loop-1) break;
+            for(i=matrix.length-loop-2;i>=loop+1;i--) list.add(matrix[i][j]);
+            
+        }
+        return list;
+    }
+}
+
+//the idea is the same as csn but more simpler
+class Solution {
+    public List < Integer > spiralOrder(int[][] matrix) {
+        List ans = new ArrayList();
+        if (matrix.length == 0)
+            return ans;
+        int r1 = 0, r2 = matrix.length - 1;
+        int c1 = 0, c2 = matrix[0].length - 1;
+        while (r1 <= r2 && c1 <= c2) {
+            for (int c = c1; c <= c2; c++) ans.add(matrix[r1][c]);
+            for (int r = r1 + 1; r <= r2; r++) ans.add(matrix[r][c2]);
+            if (r1 < r2 && c1 < c2) {
+                for (int c = c2 - 1; c > c1; c--) ans.add(matrix[r2][c]);
+                for (int r = r2; r > r1; r--) ans.add(matrix[r][c1]);
+            }
+            r1++;
+            r2--;
+            c1++;
+            c2--;
+        }
+        return ans;
+    }
+}
