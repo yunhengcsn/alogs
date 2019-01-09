@@ -1,4 +1,4 @@
-//O(N) Complexity nb!
+//O(N) Complexity nb! 7ms
 //The basic idea is this: at each step, we keep track of the furthest reachable index. 
 //The nature of the problem (eg. maximal jumps where you can hit a range of targets instead of singular jumps where you can only hit one target) is that for an index to be reachable, each of the previous indices have to be reachable.
 
@@ -42,7 +42,7 @@ public class Solution {
     }
 }
 
-//accepted
+//accepted 2696ms
 //Approach 2: Dynamic Programming Top-down
 //Top-down Dynamic Programming can be thought of as optimized backtracking. 
 //It relies on the observation that once we determine that a certain index is good / bad, this result will never change. 
