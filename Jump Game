@@ -1,0 +1,93 @@
+//O(N) Complexity nb!
+class Solution{
+        public boolean canJump(int[] nums) {
+        int reachable = 0;
+        for (int i=0; i<nums.length; ++i) {
+            if (i > reachable) return false;
+            reachable = Math.max(reachable, i + nums[i]);
+        }
+        return true;
+    }
+}
+
+//backtracking  time limit exceeded
+//This is the inefficient solution where we try every single jump pattern that takes us from the first position to the last. 
+//We start from the first position and jump to every index that is reachable. 
+//We repeat the process until last index is reached. When stuck, backtrack.
+
+public class Solution {
+    public boolean canJumpFromPosition(int position, int[] nums) {
+        if (position == nums.length - 1) {
+            return true;
+        }
+
+        int furthestJump = Math.min(position + nums[position], nums.length - 1);
+        for (int nextPosition = furthestJump; nextPosition > position; nextPosition--) {
+            if (canJumpFromPosition(nextPosition, nums)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean canJump(int[] nums) {
+        return canJumpFromPosition(0, nums);
+    }
+}
+
+//accepted
+//Approach 2: Dynamic Programming Top-down
+//Top-down Dynamic Programming can be thought of as optimized backtracking. 
+//It relies on the observation that once we determine that a certain index is good / bad, this result will never change. 
+//This means that we can store the result and not need to recompute it every time.
+//Therefore, for each position in the array, we remember whether the index is good or bad. 
+//Let's call this array memo and let its values be either one of: GOOD, BAD, UNKNOWN. This technique is called memoization[2].
+//An example of a memoization table for input array nums = [2, 4, 2, 1, 0, 2, 0] can be seen in the diagram below. 
+//We write G for a GOOD position and B for a BAD one. We can see that we cannot start from indices 2, 3 or 4 and 
+//eventually reach last index (6), but we can do that from indices 0, 1, 5 and (trivially) 6.
+
+//Index	0	1	2	3	4	5	6
+//nums	2	4	2	1	0	2	0
+//memo	G	G	B	B	B	G	G
+//Steps
+
+//Initially, all elements of the memo table are UNKNOWN, except for the last one, which is (trivially) GOOD (it can reach itself)
+//Modify the backtracking algorithm such that the recursive step first checks if the index is known (GOOD / BAD)
+//If it is known then return True / False
+//Otherwise perform the backtracking steps as before
+//Once we determine the value of the current index, we store it in the memo table
+
+enum Index {
+    GOOD, BAD, UNKNOWN
+}
+
+public class Solution {
+    Index[] memo;
+
+    public boolean canJumpFromPosition(int position, int[] nums) {
+        if (memo[position] != Index.UNKNOWN) {
+            return memo[position] == Index.GOOD ? true : false;
+        }
+
+        int furthestJump = Math.min(position + nums[position], nums.length - 1);
+        for (int nextPosition = position + 1; nextPosition <= furthestJump; nextPosition++) {
+            if (canJumpFromPosition(nextPosition, nums)) {
+                memo[position] = Index.GOOD;
+                return true;
+            }
+        }
+
+        memo[position] = Index.BAD;
+        return false;
+    }
+
+    public boolean canJump(int[] nums) {
+        memo = new Index[nums.length];
+        for (int i = 0; i < memo.length; i++) {
+            memo[i] = Index.UNKNOWN;
+        }
+        memo[memo.length - 1] = Index.GOOD;
+        return canJumpFromPosition(0, nums);
+    }
+}
