@@ -13,6 +13,7 @@ class Solution {
         List<Interval> list=new ArrayList<>();
         if(intervals.size()==0||intervals.size()==1) return intervals;
         Collections.sort(intervals,new mySort());
+        // or use lamda expression :intervals.sort((i1, i2) -> Integer.compare(i1.start, i2.start));
         Interval tmp=intervals.get(0);
         for(int i=1;i<intervals.size();i++){
             Interval latter=intervals.get(i);
