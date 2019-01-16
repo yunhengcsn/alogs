@@ -1,0 +1,61 @@
+//12ms csn
+class Solution {
+    public String getPermutation(int n, int k) {
+        StringBuilder sb=new StringBuilder();
+        List<Integer> list=new ArrayList();
+        for(int i=1;i<=n;i++) list.add(i);
+        int id=0;
+        for(int i=0;i<n-1;i++){
+            if(i==n-2) id=k-1;
+            else id=(k-1)/(factorial(n-1-i));
+            sb.append(list.get(id));
+            list.remove(id);
+            k=k%factorial(n-1-i)==0?factorial(n-1-i):k%factorial(n-1-i);
+            
+        }
+        sb.append(list.get(0));
+        return sb.toString();
+       
+    }
+    public int factorial(int n){
+        int num=1;
+        if(n==0) return num;
+        while(n>0) num*=n--;
+        return num;
+    }
+}
+
+//13ms
+public class Solution {
+public String getPermutation(int n, int k) {
+    int pos = 0;
+    List<Integer> numbers = new ArrayList<>();
+    int[] factorial = new int[n+1];
+    StringBuilder sb = new StringBuilder();
+    
+    // create an array of factorial lookup
+    int sum = 1;
+    factorial[0] = 1;
+    for(int i=1; i<=n; i++){
+        sum *= i;
+        factorial[i] = sum;
+    }
+    // factorial[] = {1, 1, 2, 6, 24, ... n!}
+    
+    // create a list of numbers to get indices
+    for(int i=1; i<=n; i++){
+        numbers.add(i);
+    }
+    // numbers = {1, 2, 3, 4}
+    
+    k--;
+    
+    for(int i = 1; i <= n; i++){
+        int index = k/factorial[n-i];
+        sb.append(String.valueOf(numbers.get(index)));
+        numbers.remove(index);
+        k-=index*factorial[n-i];
+    }
+    
+    return String.valueOf(sb);
+}
