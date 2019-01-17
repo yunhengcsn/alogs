@@ -1,0 +1,81 @@
+//13ms csn
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode rotateRight(ListNode head, int k) {
+        int length=0;
+        ListNode node=head;
+        ListNode tail=head;
+        while(node!=null){
+            length++;
+            tail=node;
+            node=node.next;
+        }
+        if(length==0) return head;
+        k=k%length;
+        while(k>0){
+            tail.next=head;
+            head=tail;
+            k--;
+            ListNode nd=head;
+            for(int i=0;i<length-1;i++){
+                nd=nd.next;
+            }
+            tail=nd;
+            tail.next=null;
+        }
+        return head;
+    }
+}
+
+
+//13ms
+public ListNode rotateRight(ListNode head, int n) {
+    if (head==null||head.next==null) return head;
+    ListNode dummy=new ListNode(0);
+    dummy.next=head;
+    ListNode fast=dummy,slow=dummy;
+
+    int i;
+    for (i=0;fast.next!=null;i++)//Get the total length 
+    	fast=fast.next;
+    
+    for (int j=i-n%i;j>0;j--) //Get the i-n%i th node
+    	slow=slow.next;
+    
+    fast.next=dummy.next; //Do the rotation
+    dummy.next=slow.next;
+    slow.next=null;
+    
+    return dummy.next;
+}
+
+
+//13ms
+if (head == null)
+		return head;
+	
+	ListNode copyHead = head;
+	
+	int len = 1;
+	while (copyHead.next != null) {
+		copyHead = copyHead.next;
+		len++;
+	}
+	
+	copyHead.next = head;
+	
+	for (int i = len - k % len; i > 1; i--)
+		head = head.next;
+
+	copyHead = head.next;
+	head.next = null;
+
+	return copyHead;
+}
