@@ -1,0 +1,19 @@
+class Solution {
+    public void sortColors(int[] nums) {
+        int len=nums.length;
+        int zero=0;
+        int second=len-1;
+        for(int i=0;i<=second;i++){
+            while(nums[zero]==0&&zero<second) zero++;
+            while(nums[second]==2&&second>zero) second--;
+            if(nums[i]==2&&i<second){
+                nums[i]=nums[second];
+                nums[second--]=2;
+            }
+            if(nums[i]==0&&i>zero){
+                nums[i]=nums[zero];
+                nums[zero++]=0;
+            }            
+        }
+    }
+}
