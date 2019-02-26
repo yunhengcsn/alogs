@@ -1,0 +1,34 @@
+//5ms
+public int removeDuplicates(int[] nums) {
+    int i = 0;
+    for (int n : nums)
+        if (i < 2 || n > nums[i-2])
+            nums[i++] = n;
+    return i;
+}
+
+//7ms
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        if(nums.length<3) return nums.length;
+        int end=nums.length;
+        for(int i=0;i<nums.length;i++){
+            if(i+1<nums.length&&nums[i]!=nums[i+1]){
+                if(nums[i]>nums[i+1]) return i+1;
+                else continue;
+            } 
+            else if(i+2<nums.length&&nums[i]==nums[i+2]){
+                int tmp=nums[i+2];
+                if(end==i+2) return end;
+                else{
+                    for(int k=i+3;k<end;k++){
+                    nums[k-1]=nums[k];
+                    }
+                    nums[--end]=tmp;
+                    i--;
+                }
+            }
+        }
+        return end;
+    }
+}
